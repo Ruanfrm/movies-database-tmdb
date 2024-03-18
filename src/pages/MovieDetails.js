@@ -3,13 +3,16 @@ import { Link, useParams } from "react-router-dom";
 import Rating from "react-rating-stars-component";
 import { MdFavoriteBorder, MdFavorite } from "react-icons/md";
 import { MdLanguage, MdAttachMoney, MdStar } from "react-icons/md";
+import { MdOutlineMovieFilter } from "react-icons/md";
 import { IoMdClock } from "react-icons/io";
+import APIKey from "../ApiKey"
 
 import { AiOutlineCalendar, AiFillHeart } from "react-icons/ai";
+import { toast } from "react-toastify";
 
-const API_KEY = process.env.REACT_APP_API_KEY;
-const BASE_URL = process.env.REACT_APP_BASE_URL;
-const POSTER_BASE_URL = process.env.REACT_APP_POSTER_BASE_URL;
+const API_KEY = APIKey.key;
+const BASE_URL = APIKey.base_url;
+const POSTER_BASE_URL = APIKey.poster_base_url;
 
 function MovieDetails() {
   const [movieDetails, setMovieDetails] = useState(null);
@@ -43,14 +46,17 @@ function MovieDetails() {
     console.log("favorites before:", favorites);
     if (favorites[id]) {
       delete favorites[id];
+      toast.warn("Item removido dos favoritos com sucesso!");
     } else {
       favorites[id] = {
         name: movieDetails.title,
         genre: movieDetails.genres.map(genre => genre.name).join(', ')
       };
+      toast.success("Item adicionado aos favoritos com sucesso!");
     }
     localStorage.setItem("favorites", JSON.stringify(favorites));
     setIsFavorite(!isFavorite);
+    
     console.log("favorites after:", favorites);
     console.log("isFavorite:", isFavorite);
   };
@@ -113,10 +119,12 @@ function MovieDetails() {
           <p>{movieDetails.overview}</p>
           <div className="flex mt-2">
             <div className="w-1/2 ">
+          
               <div className="flex items-center">
                 <MdLanguage className="mr-2" />
                 <p>
                   <strong>Language:</strong> {movieDetails.original_language}
+                  
                 </p>
               </div>
               <div className="flex items-center">
@@ -179,8 +187,23 @@ function MovieDetails() {
               <div className="flex items-center">
                 <IoMdClock className="mr-2" />
                 <p>
-                  <strong>Runtime:</strong> {movieDetails.runtime} mins
+                  <strong>Runtime:</strong> {movieDetails.runtime} mins 
                 </p>
+              </div>
+              <div className="flex items-center mt-2">
+                  <a
+                    href={`https://embed.warezcdn.net/filme/${movieDetails.imdb_id}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-blue-500"
+                  >
+                <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold ml-2 py-2 px-4 rounded flex items-center">
+                <MdOutlineMovieFilter className="mr-2" />
+
+                  Watch Movie
+                  
+                </button>
+                  </a>
               </div>
             </div>
           </div>
@@ -192,9 +215,9 @@ function MovieDetails() {
           className=" text-white font-bold py-2 px-4 rounded flex items-center"
         >
           {isFavorite ? (
-            <MdFavorite className="mr-2  " size={20} />
+            <MdFavorite size={20} />
           ) : (
-            <MdFavoriteBorder className="mr-2" size={20} />
+            <MdFavoriteBorder size={20} />
           )}
         </button>
         <button
@@ -203,6 +226,7 @@ function MovieDetails() {
         >
           {isFavorite ? "Remove from Favorites" : "Add to Favorites"}
         </button>
+       
         <Link
           to="/"
           className="bg-blue-500 hover:bg-blue-600 text-white font-bold ml-2 py-2 px-4 rounded"

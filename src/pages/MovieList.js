@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { IoMdEye } from 'react-icons/io';
 import { Link } from 'react-router-dom';
 import Pagination from '../components/Pagination'; // Importando o componente de paginação
+import APIKey from "../ApiKey"
 
-const API_KEY = process.env.REACT_APP_API_KEY;
-const BASE_URL = process.env.REACT_APP_BASE_URL;
-const POSTER_BASE_URL = process.env.REACT_APP_POSTER_BASE_URL;
+const API_KEY = APIKey.key;
+const BASE_URL = APIKey.base_url;
+const POSTER_BASE_URL = APIKey.poster_base_url;
 
 function MovieList() {
   const [searchInput, setSearchInput] = useState('');
@@ -21,7 +22,7 @@ function MovieList() {
     if (!searchInput.trim()) return;
 
     try {
-      const response = await fetch(`${BASE_URL}/search/movie?api_key=${API_KEY}&query=${searchInput}`);
+      const response = await fetch(`${BASE_URL}/search/movie?api_key=${API_KEY}&query=${searchInput}&language=pt-BR`);
       const data = await response.json();
       setMovies(data.results);
       setTotalPages(data.total_pages); // Atualizando o total de páginas com base na resposta da API
@@ -32,7 +33,7 @@ function MovieList() {
 
   const getPopularMovies = async () => {
     try {
-      const response = await fetch(`${BASE_URL}/movie/popular?api_key=${API_KEY}&page=${currentPage}`);
+      const response = await fetch(`${BASE_URL}/movie/popular?api_key=${API_KEY}&page=${currentPage}&language=pt-BR`);
       const data = await response.json();
       setMovies(data.results);
       setTotalPages(data.total_pages); // Atualizando o total de páginas com base na resposta da API
