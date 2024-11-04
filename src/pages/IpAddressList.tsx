@@ -97,7 +97,7 @@ export const IpAddressList: React.FC = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
+    <div className="flex items-center justify-center mt-5">
       <Card className="w-full max-w-5xl">
         <CardHeader>
           <CardTitle className="text-center text-lg font-bold">Lista de Endereços IP</CardTitle>
@@ -133,8 +133,8 @@ export const IpAddressList: React.FC = () => {
                       </span>
                     </TableCell>
                     <TableCell className="flex space-x-2">
-                      <Button variant="outline" size="sm" onClick={() => handleEdit(ip)}>Editar</Button>
-                      <Button variant="destructive" size="sm" onClick={() => handleDelete(ip)}>Excluir</Button>
+                      {/* <Button variant="outline" size="sm" onClick={() => handleEdit(ip)}>Editar</Button>
+                      <Button variant="destructive" size="sm" onClick={() => handleDelete(ip)}>Excluir</Button> */}
                     </TableCell>
                   </TableRow>
                 ))}

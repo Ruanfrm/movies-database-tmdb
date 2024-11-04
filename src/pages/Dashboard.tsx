@@ -4,6 +4,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '../co
 import { Loader } from '../components/ui/loader'; // Um componente Loader que você pode criar ou usar da biblioteca
 import InterfaceMonitor from '@/component/InterfaceMonitor';
 import MikroTikControl from '@/component/MikroTikControl';
+import { IpAddressList } from './IpAddressList';
 
 export function Dashboard() {
   const [systemInfo, setSystemInfo] = useState<Record<string, any> | null>(null);
@@ -110,6 +111,7 @@ export function Dashboard() {
        
       </div>
       <InterfaceMonitor />
+      <IpAddressList/>
       <MikroTikControl/>
     </div>
   );
