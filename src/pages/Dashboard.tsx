@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '../components/ui/card';
 import { Loader } from '../components/ui/loader'; // Um componente Loader que você pode criar ou usar da biblioteca
 import InterfaceMonitor from '@/component/InterfaceMonitor';
+import MikroTikControl from '@/component/MikroTikControl';
 
 export function Dashboard() {
   const [systemInfo, setSystemInfo] = useState<Record<string, any> | null>(null);
@@ -108,7 +109,8 @@ export function Dashboard() {
 
        
       </div>
-       <InterfaceMonitor />
+      <InterfaceMonitor />
+      <MikroTikControl/>
     </div>
   );
 }

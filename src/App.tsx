@@ -9,6 +9,7 @@ import { HotspotClients } from './pages/HotspotClients';
 import { Connections } from './pages/Connections';
 import { Footer } from './component/Footer';
 import LogsComponent from './pages/Logs';
+import NetworkManager from './pages/NetworkManager';
 
 export function App() {
   return (
@@ -25,6 +26,8 @@ export function App() {
             <Route path="/hotspot-clients" element={<HotspotClients />} />
             <Route path="/active-connections" element={<Connections />} />
             <Route path="/logs" element={<LogsComponent/>} />
+            <Route path="/manage" element={<NetworkManager/>} />
+
 
           </Routes>
         <Footer/>
