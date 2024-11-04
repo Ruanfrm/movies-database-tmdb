@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { DashboardIcon, GlobeIcon, LayersIcon, Link2Icon, PersonIcon, ChevronLeftIcon, ChevronRightIcon, ActivityLogIcon } from '@radix-ui/react-icons';
+import { LayoutDashboard, GlobeIcon, LayersIcon, Link2Icon, UserPenIcon, ChevronLeftIcon, ChevronRightIcon, LogsIcon, UserIcon, UsersIcon, SettingsIcon, LogOutIcon } from 'lucide-react';
 
 export function Sidebar() {
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -23,7 +23,7 @@ export function Sidebar() {
   };
 
   return (
-    <Card className={`min-h-screen ${isCollapsed ? 'w-21' : 'w-64'} p-4 border-r transition-all duration-300`}>
+    <Card className={`min-h-screen ${isCollapsed ? 'w-21' : 'w-64'} p-4 border-r shadow-lg transition-all duration-300`}>
       <CardHeader className="flex justify-between items-center">
         {!isCollapsed && <CardTitle className="text-lg font-semibold">Painel de Controle</CardTitle>}
         <button onClick={toggleSidebar} className="text-gray-600 hover:text-blue-600">
@@ -35,7 +35,7 @@ export function Sidebar() {
           <ul className="space-y-3">
             <li>
               <Link to="/" className={`flex ${isCollapsed ? 'justify-center' : 'items-center space-x-2'} text-gray-700 hover:text-blue-600`}>
-                <DashboardIcon className="w-5 h-5" />
+                <LayoutDashboard className="w-5 h-5" />
                 {!isCollapsed && <span>Dashboard</span>}
               </Link>
             </li>
@@ -47,7 +47,7 @@ export function Sidebar() {
             </li>
             <li>
               <Link to="/dhcp-clients" className={`flex ${isCollapsed ? 'justify-center' : 'items-center space-x-2'} text-gray-700 hover:text-blue-600`}>
-                <PersonIcon className="w-5 h-5" />
+                <UsersIcon className="w-5 h-5" />
                 {!isCollapsed && <span>Clientes DHCP</span>}
               </Link>
             </li>
@@ -59,7 +59,7 @@ export function Sidebar() {
             </li>
             <li>
               <Link to="/hotspot-clients" className={`flex ${isCollapsed ? 'justify-center' : 'items-center space-x-2'} text-gray-700 hover:text-blue-600`}>
-                <PersonIcon className="w-5 h-5" />
+                <UsersIcon className="w-5 h-5" />
                 {!isCollapsed && <span>Clientes Hotspot</span>}
               </Link>
             </li>
@@ -71,11 +71,34 @@ export function Sidebar() {
             </li>
             <li>
               <Link to="/logs" className={`flex ${isCollapsed ? 'justify-center' : 'items-center space-x-2'} text-gray-700 hover:text-blue-600`}>
-                <ActivityLogIcon className="w-4 h-5" />
+                <LogsIcon className="w-4 h-5" />
                 {!isCollapsed && <span>Logs</span>}
               </Link>
             </li>
           </ul>
+          <div className="border-t border-gray-300 mt-4 pt-4">
+            <h3 className="text-gray-600 mb-2">Conta de Usuário</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link to="/profile" className={`flex ${isCollapsed ? 'justify-center' : 'items-center space-x-2'} text-gray-700 hover:text-blue-600`}>
+                  <UserIcon className="w-5 h-5" />
+                  {!isCollapsed && <span>Perfil</span>}
+                </Link>
+              </li>
+              <li>
+                <Link to="/settings" className={`flex ${isCollapsed ? 'justify-center' : 'items-center space-x-2'} text-gray-700 hover:text-blue-600`}>
+                  <SettingsIcon className="w-5 h-5" />
+                  {!isCollapsed && <span>Configurações</span>}
+                </Link>
+              </li>
+              <li>
+                <Link to="/logout" className={`flex ${isCollapsed ? 'justify-center' : 'items-center space-x-2'} text-gray-700 hover:text-blue-600`}>
+                  <LogOutIcon className="w-5 h-5" />
+                  {!isCollapsed && <span>Sair</span>}
+                </Link>
+              </li>
+            </ul>
+          </div>
         </nav>
       </CardContent>
     </Card>

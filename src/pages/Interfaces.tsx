@@ -8,7 +8,7 @@ import {
   TableHead,
   TableCell,
   TableCaption,
-} from '../components/ui/table'; // Verifique o caminho correto
+} from '../components/ui/table';
 
 export function Interfaces() {
   const [interfaces, setInterfaces] = useState<any[]>([]);
@@ -42,39 +42,39 @@ export function Interfaces() {
     <div className="p-4">
       <h2 className="text-xl font-semibold mb-4">Interfaces</h2>
 
-      <Table>
-        <TableCaption>Lista de Interfaces</TableCaption>
+      <Table className="border ">
+        <TableCaption className="text-gray-500 dark:text-gray-400">Lista de Interfaces</TableCaption>
         <TableHeader>
-          <TableRow>
-            <TableHead>Nome</TableHead>
-            <TableHead>MAC Address</TableHead>
-            <TableHead>MTU</TableHead>
-            <TableHead>Tráfego (Recebido / Enviado)</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Última Conexão</TableHead>
-            <TableHead>Quedas de Conexão</TableHead>
+          <TableRow className="">
+            <TableHead className="text-gray-700 dark:text-gray-300">Nome</TableHead>
+            <TableHead className="text-gray-700 dark:text-gray-300">MAC Address</TableHead>
+            <TableHead className="text-gray-700 dark:text-gray-300">MTU</TableHead>
+            <TableHead className="text-gray-700 dark:text-gray-300">Tráfego (Recebido / Enviado)</TableHead>
+            <TableHead className="text-gray-700 dark:text-gray-300">Status</TableHead>
+            <TableHead className="text-gray-700 dark:text-gray-300">Última Conexão</TableHead>
+            <TableHead className="text-gray-700 dark:text-gray-300">Quedas de Conexão</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {interfaces.length > 0 ? (
             interfaces.map((iface, index) => (
-              <TableRow key={index} className={iface.running === "true" ? "bg-green-50" : "bg-red-50"}>
-                <TableCell>{iface.name}</TableCell>
-                <TableCell>{iface['mac-address']}</TableCell>
-                <TableCell>{iface.mtu}</TableCell>
-                <TableCell>
+              <TableRow key={index} className={`${iface.running === "true" ? "bg-green-50 dark:bg-green-900" : "bg-red-50 dark:bg-red-900"}`}>
+                <TableCell className="text-gray-800 dark:text-gray-300">{iface.name}</TableCell>
+                <TableCell className="text-gray-800 dark:text-gray-300">{iface['mac-address']}</TableCell>
+                <TableCell className="text-gray-800 dark:text-gray-300">{iface.mtu}</TableCell>
+                <TableCell className="text-gray-800 dark:text-gray-300">
                   {formatBytes(parseInt(iface['rx-byte']))} / {formatBytes(parseInt(iface['tx-byte']))}
                 </TableCell>
-                <TableCell className={iface.running === "true" ? "text-green-600" : "text-red-600"}>
+                <TableCell className={iface.running === "true" ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400"}>
                   {iface.running === "true" ? "Ativa" : "Inativa"}
                 </TableCell>
-                <TableCell>{iface['last-link-up-time']}</TableCell>
-                <TableCell>{iface['link-downs']}</TableCell>
+                <TableCell className="text-gray-800 dark:text-gray-300">{iface['last-link-up-time']}</TableCell>
+                <TableCell className="text-gray-800 dark:text-gray-300">{iface['link-downs']}</TableCell>
               </TableRow>
             ))
           ) : (
             <TableRow>
-              <TableCell colSpan={7} className="text-center">
+              <TableCell colSpan={7} className="text-center text-gray-800 dark:text-gray-300">
                 Nenhuma interface encontrada.
               </TableCell>
             </TableRow>

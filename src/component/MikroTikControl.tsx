@@ -46,7 +46,7 @@ const MikroTikControl = () => {
   };
 
   return (
-    <Card className="w-full p-6 mx-auto bg-white shadow-lg rounded-lg mt-5">
+    <Card className="w-full p-6 mx-auto shadow-lg rounded-lg mt-5">
       <CardHeader>
         <CardTitle className="text-center text-xl font-bold">Controle do MikroTik</CardTitle>
       </CardHeader>
