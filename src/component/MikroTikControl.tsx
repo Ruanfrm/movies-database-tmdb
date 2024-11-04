@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
 import { Dialog, DialogTrigger, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { ReloadIcon, StopIcon, ResetIcon } from "@radix-ui/react-icons";
+import { ReloadIcon, StopIcon, ResetIcon, Share2Icon } from "@radix-ui/react-icons";
 import axios from 'axios';
 
 const MikroTikControl = () => {
@@ -24,12 +24,19 @@ const MikroTikControl = () => {
       case 'reset':
         endpoint = 'reset';
         break;
+      case 'backup':
+        endpoint = 'backup';
+        break;
       default:
+        setLoading(null);
         return;
     }
 
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/${endpoint}`);
+      const response = action === 'backup'
+        ? await axios.get(`${import.meta.env.VITE_API_URL}/${endpoint}`)
+        : await axios.post(`${import.meta.env.VITE_API_URL}/${endpoint}`);
+
       setResponseMessage(response.data.message);
     } catch (error) {
       setResponseMessage(error.response?.data?.error || "Erro ao executar ação");
@@ -39,7 +46,7 @@ const MikroTikControl = () => {
   };
 
   return (
-    <Card className="w-full max-w-md p-6 mx-auto bg-white shadow-lg rounded-lg mt-5">
+    <Card className="w-full p-6 mx-auto bg-white shadow-lg rounded-lg mt-5">
       <CardHeader>
         <CardTitle className="text-center text-xl font-bold">Controle do MikroTik</CardTitle>
       </CardHeader>
@@ -57,6 +64,7 @@ const MikroTikControl = () => {
               <ReloadIcon className="w-5 h-5 text-blue-500" />
               Reiniciar
             </Button>
+            
           </DialogTrigger>
           <DialogContent>
             <DialogTitle>Reiniciar MikroTik</DialogTitle>
@@ -68,6 +76,9 @@ const MikroTikControl = () => {
             >
               Confirmar Reinício
             </Button>
+            {responseMessage && (
+          <p className="mt-4 text-center text-sm font-medium text-green-500">{responseMessage}</p>
+        )}
           </DialogContent>
         </Dialog>
 
@@ -89,6 +100,9 @@ const MikroTikControl = () => {
             >
               Confirmar Desligamento
             </Button>
+            {responseMessage && (
+          <p className="mt-4 text-center text-sm font-medium text-green-500">{responseMessage}</p>
+        )}
           </DialogContent>
         </Dialog>
 
@@ -110,6 +124,33 @@ const MikroTikControl = () => {
             >
               Confirmar Reset
             </Button>
+            {responseMessage && (
+          <p className="mt-4 text-center text-sm font-medium text-green-500">{responseMessage}</p>
+        )}
+          </DialogContent>
+        </Dialog>
+
+        {/* Botão de backup */}
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button variant="outline" className="flex items-center gap-2" disabled={loading === 'backup'}>
+              <Share2Icon className="w-5 h-5 text-green-500" />
+              Backup
+            </Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogTitle>Realizar Backup do MikroTik</DialogTitle>
+            <DialogDescription>Tem certeza de que deseja gerar o backup do MikroTik?</DialogDescription>
+            <Button
+              variant="destructive"
+              onClick={() => handleAction('backup')}
+              disabled={loading === 'backup'}
+            >
+              Confirmar Backup
+            </Button>
+            {responseMessage && (
+          <p className="mt-4 text-center text-sm font-medium text-green-500">{responseMessage}</p>
+        )}
           </DialogContent>
         </Dialog>
       </CardFooter>
