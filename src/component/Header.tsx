@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Button } from '@/components/ui/button';
-import { SunIcon, MoonIcon } from '@radix-ui/react-icons'; // Importando ícones do Radix UI
 import {
   Select,
   SelectTrigger,
@@ -14,7 +12,6 @@ import { ModeToggle } from './mode-toggle';
 import { toast } from 'sonner';
 
 export function Header() {
-  const { theme, toggleTheme } = useTheme();
   const [systemName, setSystemName] = useState<Record<string, any> | null>(null);
   const [intervalTime, setIntervalTime] = useState<number>(() => {
     return parseInt(localStorage.getItem('updateInterval') || '5000');

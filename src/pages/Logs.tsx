@@ -3,16 +3,22 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { ReloadIcon } from '@radix-ui/react-icons';
 import { useDebounce } from 'use-debounce';
-import { toast } from "sonner"
+import { toast } from "sonner";
 
+interface Log {
+  id: string;
+  message: string;
+  time: string;
+  topics: string;
+}
 
 const LogsComponent = () => {
-  const [logs, setLogs] = useState([]);
-  const [filteredLogs, setFilteredLogs] = useState([]);
+  const [logs, setLogs] = useState<Log[]>([]);
+  const [filteredLogs, setFilteredLogs] = useState<Log[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [debouncedSearchTerm] = useDebounce(searchTerm, 300);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [logsPerPage] = useState(10);
   const [sortOrder, setSortOrder] = useState('newest');
@@ -24,11 +30,12 @@ const LogsComponent = () => {
     try {
       const response = await fetch(`${import.meta.env.VITE_API_URL}/mikrotik-logs`);
       if (!response.ok) throw new Error('Falha ao buscar logs. Tente novamente mais tarde.');
-      const data = await response.json();
-      toast("Logs carregados com sucesso.")
+      const data: Log[] = await response.json();
+      toast.success("Logs carregados com sucesso.");
       setLogs(data.reverse()); // Carregar logs com o mais recente primeiro
-    } catch (error) {
+    } catch (error: any) {
       setError(error.message);
+      toast.error("Erro ao carregar logs.");
     } finally {
       setLoading(false);
     }
@@ -81,22 +88,21 @@ const LogsComponent = () => {
           className="mr-2"
         />
 
-        {/* <select
+        <select
           onChange={handleTopicChange}
           value={selectedTopic}
-          className="p-2 border rounded-md"
+          className="p-2 border rounded-md dark:text-zinc-900"
         >
           <option value="">Todos os tipos</option>
           <option value="error">Erro</option>
           <option value="info">Info</option>
           <option value="warning">Aviso</option>
-        </select> */}
+        </select>
 
         <select
           onChange={(e) => setSortOrder(e.target.value)}
           value={sortOrder}
           className="p-2 border rounded-md dark:text-zinc-900"
-          
         >
           <option value="newest">Mais recentes</option>
           <option value="oldest">Mais antigos</option>
