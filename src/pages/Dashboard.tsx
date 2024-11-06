@@ -14,12 +14,9 @@ import { IpAddressList } from "./IpAddressList";
 import AlertDialogIntro from "@/component/AlertDialogIntro";
 
 export function Dashboard() {
-  const [systemInfo, setSystemInfo] = useState(null);
-  const [systemName, setSystemName] = useState(null);
-  const [systemVoltage, setSystemVoltage] = useState(null);
-  const [intervalTime, setIntervalTime] = useState(() => {
-    return parseInt(localStorage.getItem("updateInterval") || "5000");
-  });
+  const [systemInfo, setSystemInfo] = useState<{ "cpu-load"?: number; uptime?: string; version?: string; "total-memory"?: string; "architecture-name"?: string } | null>(null);
+  const [systemVoltage, setSystemVoltage] = useState<{ value?: number } | null>(null);
+  const [intervalTime, setIntervalTime] = useState<number>(5000); // Definindo diretamente o valor de 5000
 
 
   useEffect(() => {
@@ -34,17 +31,7 @@ export function Dashboard() {
       }
     };
 
-    const fetchSystemName = async () => {
-      try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/system-name`
-        );
-        setSystemName(response.data);
-      } catch (error) {
-        console.error("Erro ao buscar dados de CPU:", error);
-      }
-    };
-
+   
     const fetchSystemVoltage = async () => {
       try {
         const response = await axios.get(
@@ -57,12 +44,11 @@ export function Dashboard() {
     };
 
     fetchSystemInfo();
-    fetchSystemName();
     fetchSystemVoltage();
     const intervalId = setInterval(fetchSystemInfo, intervalTime);
 
     return () => clearInterval(intervalId);
-  }, [intervalTime]);
+  }, []);
 
   if (!systemInfo) {
     return <Loader />; // Usando um componente Loader para indicar carregamento

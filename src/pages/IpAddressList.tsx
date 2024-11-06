@@ -154,12 +154,12 @@ export const IpAddressList: React.FC = () => {
         >
           <div className="flex flex-col space-y-4">
             <Input
-              label="Endereço"
+              placeholder="Endereço"
               value={editingIp?.address}
               onChange={(e) => setEditingIp({ ...editingIp!, address: e.target.value })}
             />
             <Input
-              label="Rede"
+              placeholder="Rede"
               value={editingIp?.network}
               onChange={(e) => setEditingIp({ ...editingIp!, network: e.target.value })}
             />

@@ -21,7 +21,7 @@ const Modal: React.FC<ModalProps> = ({ title, isOpen, onClose, onConfirm, childr
           <div className="mt-4">{children}</div>
           <div className="mt-6 flex justify-end space-x-2">
             {onConfirm && (
-              <Button variant="primary" onClick={onConfirm}>
+              <Button variant="secondary" onClick={onConfirm}>
                 Confirmar
               </Button>
             )}
