@@ -5,6 +5,7 @@ import { Loader } from '../components/ui/loader'; // Um componente Loader que vo
 import InterfaceMonitor from '@/component/InterfaceMonitor';
 import MikroTikControl from '@/component/MikroTikControl';
 import { IpAddressList } from './IpAddressList';
+import AlertDialogIntro from '@/component/AlertDialogIntro';
 
 export function Dashboard() {
   const [systemInfo, setSystemInfo] = useState<Record<string, any> | null>(null);
@@ -113,6 +114,7 @@ export function Dashboard() {
       <InterfaceMonitor />
       <IpAddressList/>
       <MikroTikControl/>
+      <AlertDialogIntro/>
     </div>
   );
 }
