@@ -7,7 +7,6 @@ import {
   SelectItem,
   SelectValue,
 } from '../components/ui/select';
-import { useTheme } from '../context/ThemeContext';
 import { ModeToggle } from './mode-toggle';
 import { toast } from 'sonner';
 

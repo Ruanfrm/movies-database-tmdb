@@ -9,7 +9,6 @@ import { HotspotClients } from './pages/HotspotClients';
 import { Connections } from './pages/Connections';
 import { Footer } from './component/Footer';
 import LogsComponent from './pages/Logs';
-import NetworkManager from './pages/NetworkManager';
 import { NotFound } from './pages/NotFound';
 import { IpAddressList } from './pages/IpAddressList';
 import LoginForm from './pages/LoginForm';
@@ -34,7 +33,6 @@ export function App() {
             <Route path="/login" element={<LoginForm/>} />
             <Route path="/register" element={<RegisterForm/>} />
 
-            <Route path="/manage" element={<NetworkManager/>} />
             <Route path="/ip-add" element={<IpAddressList/>} />
 
 
