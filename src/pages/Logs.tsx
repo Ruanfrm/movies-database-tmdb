@@ -3,6 +3,8 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { ReloadIcon } from '@radix-ui/react-icons';
 import { useDebounce } from 'use-debounce';
+import { toast } from "sonner"
+
 
 const LogsComponent = () => {
   const [logs, setLogs] = useState([]);
@@ -22,8 +24,8 @@ const LogsComponent = () => {
     try {
       const response = await fetch(`${import.meta.env.VITE_API_URL}/mikrotik-logs`);
       if (!response.ok) throw new Error('Falha ao buscar logs. Tente novamente mais tarde.');
-
       const data = await response.json();
+      toast("Logs carregados com sucesso.")
       setLogs(data.reverse()); // Carregar logs com o mais recente primeiro
     } catch (error) {
       setError(error.message);

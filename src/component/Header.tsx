@@ -11,6 +11,7 @@ import {
 } from '../components/ui/select';
 import { useTheme } from '../context/ThemeContext';
 import { ModeToggle } from './mode-toggle';
+import { toast } from 'sonner';
 
 export function Header() {
   const { theme, toggleTheme } = useTheme();
@@ -36,6 +37,7 @@ export function Header() {
     const newInterval = parseInt(value);
     setIntervalTime(newInterval);
     localStorage.setItem('updateInterval', newInterval.toString());
+    toast("Intervalo de tempo alterado com sucesso!")
   };
 
   return (

@@ -12,6 +12,8 @@ import LogsComponent from './pages/Logs';
 import NetworkManager from './pages/NetworkManager';
 import { NotFound } from './pages/NotFound';
 import { IpAddressList } from './pages/IpAddressList';
+import LoginForm from './pages/LoginForm';
+import RegisterForm from './pages/RegisterForm';
 
 export function App() {
   return (
@@ -29,6 +31,9 @@ export function App() {
             <Route path="/hotspot-clients" element={<HotspotClients />} />
             <Route path="/active-connections" element={<Connections />} />
             <Route path="/logs" element={<LogsComponent/>} />
+            <Route path="/login" element={<LoginForm/>} />
+            <Route path="/register" element={<RegisterForm/>} />
+
             <Route path="/manage" element={<NetworkManager/>} />
             <Route path="/ip-add" element={<IpAddressList/>} />
 

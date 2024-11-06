@@ -64,7 +64,7 @@ const InterfaceMonitor = () => {
   }, [selectedInterface]);
 
   return (
-    <Card className="w-full mt-5"> {/* Altera a largura do card para 100% */}
+    <Card className="w-full mt-5" > {/* Altera a largura do card para 100% */}
       <CardHeader>
         <CardTitle>Monitoramento de Tráfego</CardTitle>
         <CardDescription>Selecione uma interface para monitorar o tráfego</CardDescription>
@@ -82,8 +82,8 @@ const InterfaceMonitor = () => {
             ))}
           </SelectContent>
         </Select>
-        <InterfaceTrafficChart data={trafficData} />
-      </CardContent>
+        <InterfaceTrafficChart data={trafficData} width={800} height={400} />
+        </CardContent>
     </Card>
   );
 };

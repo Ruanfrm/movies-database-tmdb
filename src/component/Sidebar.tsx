@@ -76,7 +76,7 @@ export function Sidebar() {
               </Link>
             </li>
           </ul>
-          <div className="border-t border-gray-300 mt-4 pt-4">
+          {/* <div className="border-t border-gray-300 mt-4 pt-4">
             <h3 className="text-gray-600 mb-2">Conta de Usuário</h3>
             <ul className="space-y-2">
               <li>
@@ -98,7 +98,7 @@ export function Sidebar() {
                 </Link>
               </li>
             </ul>
-          </div>
+          </div> */}
         </nav>
       </CardContent>
     </Card>
