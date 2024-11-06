@@ -14,20 +14,14 @@ import { IpAddressList } from "./IpAddressList";
 import AlertDialogIntro from "@/component/AlertDialogIntro";
 
 export function Dashboard() {
-  const [systemInfo, setSystemInfo] = useState<Record<string, any> | null>(
-    null
-  );
-  const [systemName, setSystemName] = useState<Record<string, any> | null>(
-    null
-  );
-  const [systemVoltage, setSystemVoltage] = useState<Record<
-    string,
-    any
-  > | null>(null);
-
-  const [intervalTime, setIntervalTime] = useState<number>(() => {
+  const [systemInfo, setSystemInfo] = useState(null);
+  const [systemName, setSystemName] = useState(null);
+  const [systemVoltage, setSystemVoltage] = useState(null);
+  const [intervalTime, setIntervalTime] = useState(() => {
     return parseInt(localStorage.getItem("updateInterval") || "5000");
   });
+
+
   useEffect(() => {
     const fetchSystemInfo = async () => {
       try {

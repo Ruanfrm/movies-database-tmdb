@@ -1,5 +1,5 @@
 import { TrendingUp } from "lucide-react";
-import { Area, AreaChart, CartesianGrid, XAxis, YAxis, Tooltip } from "recharts";
+import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
 import {
   Card,
   CardContent,

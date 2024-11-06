@@ -1,36 +1,21 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
 import { Dialog, DialogTrigger, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { ReloadIcon, StopIcon, ResetIcon, Share2Icon } from "@radix-ui/react-icons";
 import axios from 'axios';
 
+type ActionType = 'reboot' | 'shutdown' | 'reset' | 'backup';
+
 const MikroTikControl = () => {
-  const [loading, setLoading] = useState(null);
+  const [loading, setLoading] = useState<ActionType | null>(null);
   const [responseMessage, setResponseMessage] = useState("");
 
-  const handleAction = async (action) => {
+  const handleAction = async (action: ActionType) => {
     setLoading(action);
     setResponseMessage("");
 
-    let endpoint = '';
-    switch (action) {
-      case 'reboot':
-        endpoint = 'reboot';
-        break;
-      case 'shutdown':
-        endpoint = 'shutdown';
-        break;
-      case 'reset':
-        endpoint = 'reset';
-        break;
-      case 'backup':
-        endpoint = 'backup';
-        break;
-      default:
-        setLoading(null);
-        return;
-    }
+    const endpoint = action;
 
     try {
       const response = action === 'backup'
@@ -38,7 +23,7 @@ const MikroTikControl = () => {
         : await axios.post(`${import.meta.env.VITE_API_URL}/${endpoint}`);
 
       setResponseMessage(response.data.message);
-    } catch (error) {
+    } catch (error: any) {
       setResponseMessage(error.response?.data?.error || "Erro ao executar ação");
     } finally {
       setLoading(null);
@@ -57,14 +42,12 @@ const MikroTikControl = () => {
         )}
       </CardContent>
       <CardFooter className="flex justify-around mt-4 space-x-2">
-        {/* Botão de Reiniciar */}
         <Dialog>
           <DialogTrigger asChild>
             <Button variant="outline" className="flex items-center gap-2" disabled={loading === 'reboot'}>
               <ReloadIcon className="w-5 h-5 text-blue-500" />
               Reiniciar
             </Button>
-            
           </DialogTrigger>
           <DialogContent>
             <DialogTitle>Reiniciar MikroTik</DialogTitle>
@@ -76,13 +59,9 @@ const MikroTikControl = () => {
             >
               Confirmar Reinício
             </Button>
-            {responseMessage && (
-          <p className="mt-4 text-center text-sm font-medium text-green-500">{responseMessage}</p>
-        )}
           </DialogContent>
         </Dialog>
 
-        {/* Botão de Desligar */}
         <Dialog>
           <DialogTrigger asChild>
             <Button variant="outline" className="flex items-center gap-2" disabled={loading === 'shutdown'}>
@@ -100,13 +79,9 @@ const MikroTikControl = () => {
             >
               Confirmar Desligamento
             </Button>
-            {responseMessage && (
-          <p className="mt-4 text-center text-sm font-medium text-green-500">{responseMessage}</p>
-        )}
           </DialogContent>
         </Dialog>
 
-        {/* Botão de Resetar */}
         <Dialog>
           <DialogTrigger asChild>
             <Button variant="outline" className="flex items-center gap-2" disabled={loading === 'reset'}>
@@ -124,13 +99,9 @@ const MikroTikControl = () => {
             >
               Confirmar Reset
             </Button>
-            {responseMessage && (
-          <p className="mt-4 text-center text-sm font-medium text-green-500">{responseMessage}</p>
-        )}
           </DialogContent>
         </Dialog>
 
-        {/* Botão de backup */}
         <Dialog>
           <DialogTrigger asChild>
             <Button variant="outline" className="flex items-center gap-2" disabled={loading === 'backup'}>
@@ -148,9 +119,6 @@ const MikroTikControl = () => {
             >
               Confirmar Backup
             </Button>
-            {responseMessage && (
-          <p className="mt-4 text-center text-sm font-medium text-green-500">{responseMessage}</p>
-        )}
           </DialogContent>
         </Dialog>
       </CardFooter>
