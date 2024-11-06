@@ -16,8 +16,7 @@ import AlertDialogIntro from "@/component/AlertDialogIntro";
 export function Dashboard() {
   const [systemInfo, setSystemInfo] = useState<{ "cpu-load"?: number; uptime?: string; version?: string; "total-memory"?: string; "architecture-name"?: string } | null>(null);
   const [systemVoltage, setSystemVoltage] = useState<{ value?: number } | null>(null);
-  const [intervalTime, setIntervalTime] = useState<number>(5000); // Definindo diretamente o valor de 5000
-
+  const [intervalTime, setIntervalTime] = useState<number>(5000); // Permitir ao usuário mudar o intervalo
 
   useEffect(() => {
     const fetchSystemInfo = async () => {
@@ -31,7 +30,6 @@ export function Dashboard() {
       }
     };
 
-   
     const fetchSystemVoltage = async () => {
       try {
         const response = await axios.get(
@@ -45,14 +43,20 @@ export function Dashboard() {
 
     fetchSystemInfo();
     fetchSystemVoltage();
+
     const intervalId = setInterval(fetchSystemInfo, intervalTime);
 
     return () => clearInterval(intervalId);
-  }, []);
+  }, [intervalTime]); 
 
   if (!systemInfo) {
     return <Loader />; // Usando um componente Loader para indicar carregamento
   }
+
+  const handleIntervalChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newInterval = parseInt(event.target.value, 10);
+    setIntervalTime(newInterval);
+  };
 
   return (
     <div className="p-4">
@@ -124,6 +128,19 @@ export function Dashboard() {
       <IpAddressList />
       <MikroTikControl />
       <AlertDialogIntro />
+       {/* Controle para mudar o intervalo */}
+       <div className="mb-4" hidden>
+        <label htmlFor="intervalTime" className="block">Intervalo de Atualização (ms):</label>
+        <input
+          type="number"
+          id="intervalTime"
+          value={intervalTime}
+          onChange={handleIntervalChange}
+          className="mt-2 p-2 border border-gray-300"
+          min="1000"
+          
+        />
+      </div>
     </div>
   );
 }

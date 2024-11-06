@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Button } from '@/components/ui/button';
-import { WorkflowIcon, EthernetPortIcon, NetworkIcon } from 'lucide-react'; // Importando ícones do lucide-react
+import { EthernetPortIcon } from 'lucide-react'; // Importando ícones do lucide-react
 import Modal from '@/components/ui/modal'; // Importando um componente de modal que você deve ter
 import { Input } from '@/components/ui/input';
 
@@ -46,31 +45,31 @@ export const IpAddressList: React.FC = () => {
     fetchIpAddresses();
   }, []);
 
-  // Função para excluir um endereço IP
-  const handleDelete = async (ip: IpAddress) => {
-    const confirm = window.confirm(`Tem certeza que deseja excluir o endereço IP ${ip.address}?`);
-    if (confirm) {
-      try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/ip-address/${ip[".id"]}`, {
-          method: 'DELETE',
-        });
-        if (response.ok) {
-          setIpAddresses(ipAddresses.filter(item => item[".id"] !== ip[".id"]));
-        } else {
-          throw new Error(`Erro ao excluir: ${response.statusText}`);
-        }
-      } catch (error) {
-        console.error('Erro ao excluir endereço IP:', error);
-      }
-    }
-  };
+  // // Função para excluir um endereço IP
+  // const handleDelete = async (ip: IpAddress) => {
+  //   const confirm = window.confirm(`Tem certeza que deseja excluir o endereço IP ${ip.address}?`);
+  //   if (confirm) {
+  //     try {
+  //       const response = await fetch(`${import.meta.env.VITE_API_URL}/ip-address/${ip[".id"]}`, {
+  //         method: 'DELETE',
+  //       });
+  //       if (response.ok) {
+  //         setIpAddresses(ipAddresses.filter(item => item[".id"] !== ip[".id"]));
+  //       } else {
+  //         throw new Error(`Erro ao excluir: ${response.statusText}`);
+  //       }
+  //     } catch (error) {
+  //       console.error('Erro ao excluir endereço IP:', error);
+  //     }
+  //   }
+  // };
 
-  // Função para abrir o modal de edição
-  const handleEdit = (ip: IpAddress) => {
-    setEditingIp({ address: ip.address, network: ip.network });
-    setSelectedIp(ip);
-    setIsModalOpen(true);
-  };
+  // // Função para abrir o modal de edição
+  // const handleEdit = (ip: IpAddress) => {
+  //   setEditingIp({ address: ip.address, network: ip.network });
+  //   setSelectedIp(ip);
+  //   setIsModalOpen(true);
+  // };
 
   // Função para salvar a edição
   const handleSaveEdit = async () => {
