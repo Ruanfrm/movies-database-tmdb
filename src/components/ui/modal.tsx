@@ -14,9 +14,9 @@ interface ModalProps {
 const Modal: React.FC<ModalProps> = ({ title, isOpen, onClose, onConfirm, children }) => {
   return (
     <Portal>
-      <Dialog open={isOpen} onOpenChange={onClose}>
+      <Dialog open={isOpen} onOpenChange={onClose} >
         <DialogOverlay className="fixed inset-0 bg-black/30" />
-        <DialogContent className="fixed top-1/2 left-1/2 w-11/12 max-w-md transform -translate-x-1/2 -translate-y-1/2 rounded-lg bg-white p-6 shadow-lg">
+        <DialogContent className="fixed top-1/2 left-1/2 w-11/12 max-w-md transform -translate-x-1/2 -translate-y-1/2 rounded-lg bg-white dark:bg-zinc-900 p-6 shadow-lg">
           <DialogTitle className="text-lg font-bold">{title}</DialogTitle>
           <div className="mt-4">{children}</div>
           <div className="mt-6 flex justify-end space-x-2">
