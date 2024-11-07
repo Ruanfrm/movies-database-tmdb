@@ -16,6 +16,7 @@ import {
   SelectItem,
   SelectValue,
 } from '../components/ui/select';
+import { getApiUrl } from "../utils/apiConfig"; // Importa a função para obter a URL
 
 export function PppoeClients() {
   const [pppoeClients, setPppoeClients] = useState<any[]>([]);
@@ -24,8 +25,10 @@ export function PppoeClients() {
   });
 
   useEffect(() => {
+    const apiUrl = getApiUrl();
+    if (!apiUrl) return; // Impede a execução caso a URL esteja ausentess
     const fetchPppoeClients = () => {
-      axios.get(`${import.meta.env.VITE_API_URL}/pppoe-clients`)
+      axios.get(`${apiUrl}/pppoe-clients`)
         .then((response) => {
           console.log("Dados recebidos dos clientes PPPoE:", response.data);
           setPppoeClients(response.data);

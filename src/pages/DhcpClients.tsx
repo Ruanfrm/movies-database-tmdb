@@ -16,6 +16,8 @@ import {
   SelectItem,
   SelectValue,
 } from '../components/ui/select';
+import { getApiUrl } from "../utils/apiConfig"; // Importa a função para obter a URL
+
 
 export function DhcpClients() {
   const [dhcpClients, setDhcpClients] = useState<Record<string, any>[]>([]);
@@ -25,10 +27,14 @@ export function DhcpClients() {
   const [loading, setLoading] = useState<boolean>(true); // Estado de carregamento
 
   useEffect(() => {
+
+    const apiUrl = getApiUrl();
+    if (!apiUrl) return; // Impede a execução caso a URL esteja ausente
+
     const fetchDhcpClients = async () => {
       setLoading(true); // Inicia o carregamento
       try {
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}/dhcp-clients`);
+        const response = await axios.get(`${apiUrl}/dhcp-clients`);
         console.log("Dados recebidos dos clientes DHCP:", response.data);
         setDhcpClients(response.data || []); // Garante que seja um array
       } catch (error) {

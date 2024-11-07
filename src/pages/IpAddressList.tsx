@@ -5,6 +5,8 @@ import { EthernetPortIcon } from 'lucide-react'; // Importando ícones do lucide
 import Modal from '@/components/ui/modal'; // Importando um componente de modal que você deve ter
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { getApiUrl } from "../utils/apiConfig"; // Importa a função para obter a URL
+
 
 // Definindo a interface para os dados dos endereços IP
 interface IpAddress {
@@ -29,8 +31,11 @@ export const IpAddressList: React.FC = () => {
 
   useEffect(() => {
     const fetchIpAddresses = async () => {
+      const apiUrl = getApiUrl();
+      if (!apiUrl) return; // Impede a execução caso a URL esteja ausentess
+
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/ip-address`);
+        const response = await fetch(`${apiUrl}/ip-address`);
         if (!response.ok) {
           throw new Error(`Erro ao buscar dados: ${response.statusText}`);
         }
@@ -48,10 +53,12 @@ export const IpAddressList: React.FC = () => {
 
   // Função para excluir um endereço IP
   const handleDelete = async (ip: IpAddress) => {
+    const apiUrl = getApiUrl();
+    if (!apiUrl) return; // Impede a execução caso a URL esteja ausentess
     const confirm = window.confirm(`Tem certeza que deseja excluir o endereço IP ${ip.address}?`);
     if (confirm) {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/ip-address/${ip[".id"]}`, {
+        const response = await fetch(`${apiUrl}/ip-address/${ip[".id"]}`, {
           method: 'DELETE',
         });
         if (response.ok) {
@@ -74,9 +81,11 @@ export const IpAddressList: React.FC = () => {
 
   // Função para salvar a edição
   const handleSaveEdit = async () => {
+    const apiUrl = getApiUrl();
+    if (!apiUrl) return; // Impede a execução caso a URL esteja ausentess
     if (selectedIp && editingIp) {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/ip-address/${selectedIp[".id"]}`, {
+        const response = await fetch(`${apiUrl}/ip-address/${selectedIp[".id"]}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',

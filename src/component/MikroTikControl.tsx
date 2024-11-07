@@ -4,6 +4,8 @@ import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/componen
 import { Dialog, DialogTrigger, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { ReloadIcon, StopIcon, ResetIcon, Share2Icon } from "@radix-ui/react-icons";
 import axios from 'axios';
+import { getApiUrl } from "../utils/apiConfig"; // Importa a função para obter a URL
+
 
 type ActionType = 'reboot' | 'shutdown' | 'reset' | 'backup';
 
@@ -12,6 +14,8 @@ const MikroTikControl = () => {
   const [responseMessage, setResponseMessage] = useState("");
 
   const handleAction = async (action: ActionType) => {
+    const apiUrl = getApiUrl();
+    if (!apiUrl) return; // Impede a execução caso a URL esteja ausentess
     setLoading(action);
     setResponseMessage("");
 
@@ -19,8 +23,8 @@ const MikroTikControl = () => {
 
     try {
       const response = action === 'backup'
-        ? await axios.get(`${import.meta.env.VITE_API_URL}/${endpoint}`)
-        : await axios.post(`${import.meta.env.VITE_API_URL}/${endpoint}`);
+        ? await axios.get(`${apiUrl}/${endpoint}`)
+        : await axios.post(`${apiUrl}/${endpoint}`);
 
       setResponseMessage(response.data.message);
     } catch (error: any) {

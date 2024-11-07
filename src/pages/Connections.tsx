@@ -16,6 +16,8 @@ import {
   SelectItem,
   SelectValue,
 } from '../components/ui/select';
+import { getApiUrl } from "../utils/apiConfig"; // Importa a função para obter a URL
+
 
 export function Connections() {
   const [connections, setConnections] = useState<any[]>([]);
@@ -23,9 +25,13 @@ export function Connections() {
     return parseInt(localStorage.getItem('updateInterval') || '5000');
   });
 
+  
   useEffect(() => {
+    const apiUrl = getApiUrl();
+    if (!apiUrl) return; // Impede a execução caso a URL esteja ausente
+
     const fetchConnections = () => {
-      axios.get(`${import.meta.env.VITE_API_URL}/active-connections`)
+      axios.get(`${apiUrl}/active-connections`)
         .then((response) => {
           console.log("Dados recebidos das conexões ativas:", response.data);
           const formattedData = response.data.map((conn: any) => ({

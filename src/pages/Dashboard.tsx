@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { getApiUrl } from "../utils/apiConfig"; // Importa a função para obter a URL
 import {
   Card,
   CardHeader,
@@ -7,23 +8,31 @@ import {
   CardDescription,
   CardContent,
 } from "../components/ui/card";
-import { Loader } from "../components/ui/loader"; // Um componente Loader que você pode criar ou usar da biblioteca
+import { Loader } from "../components/ui/loader";
 import InterfaceMonitor from "@/component/InterfaceMonitor";
 import MikroTikControl from "@/component/MikroTikControl";
 import { IpAddressList } from "./IpAddressList";
 import AlertDialogIntro from "@/component/AlertDialogIntro";
 
 export function Dashboard() {
-  const [systemInfo, setSystemInfo] = useState<{ "cpu-load"?: number; uptime?: string; version?: string; "total-memory"?: string; "architecture-name"?: string } | null>(null);
+  const [systemInfo, setSystemInfo] = useState<{
+    "cpu-load"?: number;
+    uptime?: string;
+    version?: string;
+    "total-memory"?: string;
+    "architecture-name"?: string;
+  } | null>(null);
+
   const [systemVoltage, setSystemVoltage] = useState<{ value?: number } | null>(null);
-  const [intervalTime, setIntervalTime] = useState<number>(5000); // Permitir ao usuário mudar o intervalo
+  const [intervalTime, setIntervalTime] = useState<number>(5000);
 
   useEffect(() => {
+    const apiUrl = getApiUrl();
+    if (!apiUrl) return; // Impede a execução caso a URL esteja ausente
+
     const fetchSystemInfo = async () => {
       try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/cpu-usage`
-        );
+        const response = await axios.get(`${apiUrl}/cpu-usage`);
         setSystemInfo(response.data);
       } catch (error) {
         console.error("Erro ao buscar dados de CPU:", error);
@@ -32,9 +41,7 @@ export function Dashboard() {
 
     const fetchSystemVoltage = async () => {
       try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/voltage`
-        );
+        const response = await axios.get(`${apiUrl}/voltage`);
         setSystemVoltage(response.data);
       } catch (error) {
         console.error("Erro ao buscar dados de Voltagem:", error);
@@ -47,10 +54,10 @@ export function Dashboard() {
     const intervalId = setInterval(fetchSystemInfo, intervalTime);
 
     return () => clearInterval(intervalId);
-  }, [intervalTime]); 
+  }, [intervalTime]);
 
   if (!systemInfo) {
-    return <Loader />; // Usando um componente Loader para indicar carregamento
+    return <Loader />;
   }
 
   const handleIntervalChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,9 +74,7 @@ export function Dashboard() {
             <CardTitle>Uso de CPU</CardTitle>
             <CardDescription>{systemInfo["cpu-load"]}%</CardDescription>
           </CardHeader>
-          <CardContent>
-            {/* Aqui você pode adicionar conteúdo adicional se necessário */}
-          </CardContent>
+          <CardContent />
         </Card>
 
         <Card>
@@ -77,9 +82,7 @@ export function Dashboard() {
             <CardTitle>Tempo de Atividade</CardTitle>
             <CardDescription>{systemInfo.uptime}</CardDescription>
           </CardHeader>
-          <CardContent>
-            {/* Aqui você pode adicionar conteúdo adicional se necessário */}
-          </CardContent>
+          <CardContent />
         </Card>
 
         <Card>
@@ -87,9 +90,7 @@ export function Dashboard() {
             <CardTitle>Memória Total</CardTitle>
             <CardDescription>{systemInfo["total-memory"]}</CardDescription>
           </CardHeader>
-          <CardContent>
-            {/* Aqui você pode adicionar conteúdo adicional se necessário */}
-          </CardContent>
+          <CardContent />
         </Card>
 
         <Card>
@@ -97,9 +98,7 @@ export function Dashboard() {
             <CardTitle>Versão</CardTitle>
             <CardDescription>{systemInfo.version}</CardDescription>
           </CardHeader>
-          <CardContent>
-            {/* Aqui você pode adicionar conteúdo adicional se necessário */}
-          </CardContent>
+          <CardContent />
         </Card>
 
         <Card>
@@ -107,9 +106,7 @@ export function Dashboard() {
             <CardTitle>Arquitetura</CardTitle>
             <CardDescription>{systemInfo["architecture-name"]}</CardDescription>
           </CardHeader>
-          <CardContent>
-            {/* Aqui você pode adicionar conteúdo adicional se necessário */}
-          </CardContent>
+          <CardContent />
         </Card>
 
         <Card>
@@ -119,18 +116,18 @@ export function Dashboard() {
               {systemVoltage?.value != null ? `${systemVoltage.value}V` : "N/A"}
             </CardDescription>
           </CardHeader>
-          <CardContent>
-            {/* Aqui você pode adicionar conteúdo adicional se necessário */}
-          </CardContent>
+          <CardContent />
         </Card>
       </div>
       <InterfaceMonitor />
       <IpAddressList />
       <MikroTikControl />
       <AlertDialogIntro />
-       {/* Controle para mudar o intervalo */}
-       <div className="mb-4" hidden>
-        <label htmlFor="intervalTime" className="block">Intervalo de Atualização (ms):</label>
+
+      <div className="mb-4" hidden>
+        <label htmlFor="intervalTime" className="block">
+          Intervalo de Atualização (ms):
+        </label>
         <input
           type="number"
           id="intervalTime"
@@ -138,7 +135,6 @@ export function Dashboard() {
           onChange={handleIntervalChange}
           className="mt-2 p-2 border border-gray-300"
           min="1000"
-          
         />
       </div>
     </div>

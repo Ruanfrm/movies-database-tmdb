@@ -9,13 +9,17 @@ import {
   TableCell,
   TableCaption,
 } from '../components/ui/table';
+import { getApiUrl } from "../utils/apiConfig"; // Importa a função para obter a URL
+
 
 export function Interfaces() {
   const [interfaces, setInterfaces] = useState<any[]>([]);
 
   useEffect(() => {
+    const apiUrl = getApiUrl();
+    if (!apiUrl) return; // Impede a execução caso a URL esteja ausente
     const fetchInterfaces = () => {
-      axios.get(`${import.meta.env.VITE_API_URL}/interfaces`)
+      axios.get(`${apiUrl}/interfaces`)
         .then((response) => {
           console.log("Dados recebidos das interfaces:", response.data);
           setInterfaces(response.data);

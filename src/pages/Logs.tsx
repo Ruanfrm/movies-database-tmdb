@@ -4,6 +4,8 @@ import { Button } from '@/components/ui/button';
 import { ReloadIcon } from '@radix-ui/react-icons';
 import { useDebounce } from 'use-debounce';
 import { toast } from "sonner";
+import { getApiUrl } from "../utils/apiConfig"; // Importa a função para obter a URL
+
 
 interface Log {
   id: string;
@@ -25,10 +27,13 @@ const LogsComponent = () => {
   const [selectedTopic, setSelectedTopic] = useState('');
 
   const fetchLogs = async () => {
+    const apiUrl = getApiUrl();
+      if (!apiUrl) return; // Impede a execução caso a URL esteja ausentess
+
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/mikrotik-logs`);
+      const response = await fetch(`${apiUrl}/mikrotik-logs`);
       if (!response.ok) throw new Error('Falha ao buscar logs. Tente novamente mais tarde.');
       const data: Log[] = await response.json();
       toast.success("Logs carregados com sucesso.");

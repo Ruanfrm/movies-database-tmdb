@@ -16,6 +16,8 @@ import {
   SelectItem,
   SelectValue,
 } from '../components/ui/select';
+import { getApiUrl } from "../utils/apiConfig"; // Importa a função para obter a URL
+
 
 export function HotspotClients() {
   const [hotspotClients, setHotspotClients] = useState<any[]>([]);
@@ -24,8 +26,11 @@ export function HotspotClients() {
   });
 
   useEffect(() => {
+    const apiUrl = getApiUrl();
+    if (!apiUrl) return; // Impede a execução caso a URL esteja ausente
+
     const fetchHotspotClients = () => {
-      axios.get(`${import.meta.env.VITE_API_URL}/hotspot-clients`)
+      axios.get(`${apiUrl}/hotspot-clients`)
         .then((response) => {
           console.log("Dados recebidos dos clientes Hotspot:", response.data);
           setHotspotClients(response.data);

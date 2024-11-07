@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/card";
 import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "@/components/ui/select";
 import InterfaceTrafficChart from "@/component/InterfaceTrafficChart"; // Ajuste o caminho conforme necessário
+import { getApiUrl } from "../utils/apiConfig"; // Importa a função para obter a URL
 
 const InterfaceMonitor = () => {
   const [interfaces, setInterfaces] = useState<any[]>([]);
@@ -21,9 +22,11 @@ const InterfaceMonitor = () => {
 
   // Buscar interfaces na montagem do componente
   useEffect(() => {
+    const apiUrl = getApiUrl();
+    if (!apiUrl) return; // Impede a execução caso a URL esteja ausentess
     const fetchInterfaces = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}/interfaces`);
+        const response = await axios.get(`${apiUrl}/interfaces`);
         setInterfaces(response.data);
         setSelectedInterface(response.data[0]?.name || null); // Seleciona a primeira interface por padrão
       } catch (error) {
@@ -36,8 +39,10 @@ const InterfaceMonitor = () => {
 
   // Função para buscar o tráfego da interface selecionada
   const fetchTrafficData = async (interfaceName: string) => {
+    const apiUrl = getApiUrl();
+    if (!apiUrl) return; // Impede a execução caso a URL esteja ausentess
     try {
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/interface-traffic/${interfaceName}`);
+      const response = await axios.get(`${apiUrl}/interface-traffic/${interfaceName}`);
       const traffic = response.data.traffic[0];
       setTrafficData(prevData => [
         ...prevData,
