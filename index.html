@@ -2,11 +2,43 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/logo-mikrotik.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Mikrotik Monitor: Monitore e gerencie seu roteador Mikrotik em tempo real com gráficos de desempenho e estatísticas detalhadas." />
+    <meta name="keywords" content="Mikrotik, monitoramento, redes, performance, roteador, gráfico de desempenho, monitoramento de rede" />
+    
+    <!-- Open Graph Meta Tags for Social Media Preview -->
+    <meta property="og:title" content="Mikrotik Monitor" />
+    <meta property="og:description" content="Monitore e gerencie seu roteador Mikrotik com gráficos de desempenho e relatórios em tempo real." />
+    <meta property="og:image" content="/path/to/your/image.jpg" />
+    <meta property="og:url" content="https://www.yoursite.com" />
+    <meta property="og:type" content="website" />
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Mikrotik Monitor" />
+    <meta name="twitter:description" content="Monitore e gerencie seu roteador Mikrotik com gráficos e estatísticas detalhadas." />
+    <meta name="twitter:image" content="/path/to/your/image.jpg" />
+    <meta name="twitter:site" content="@your_twitter_handle" />
+    
+    <link rel="icon" type="image/svg+xml" href="/logo-mikrotik.png" />
+    <link rel="canonical" href="https://www.yoursite.com" /> <!-- URL Canônica para evitar duplicação de conteúdo -->
+    
     <title>Mikrotik Monitor</title>
+
+    <!-- Schema.org for Google -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Monitor Mikrotik",
+        "name": "Mikrotik Monitor",
+        "url": "https://monitor-mikrotik.vercel.app/"
+      }
+    </script>
   </head>
   <body>
+    
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
