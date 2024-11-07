@@ -23,7 +23,7 @@ export function Dashboard() {
     "architecture-name"?: string;
   } | null>(null);
 
-  const [systemVoltage, setSystemVoltage] = useState<{ value?: number } | null>(null);
+  const [systemVoltage, setSystemVoltage] = useState<{ value?: number, type?: string } | null>(null);
   const [intervalTime, setIntervalTime] = useState<number>(5000);
 
   useEffect(() => {
@@ -113,7 +113,7 @@ export function Dashboard() {
           <CardHeader>
             <CardTitle>Temperatura</CardTitle>
             <CardDescription>
-              {systemVoltage?.value != null ? `${systemVoltage.value}V` : "N/A"}
+              {systemVoltage?.value != null ? `${systemVoltage.value}${systemVoltage.type}` : "N/A"}
             </CardDescription>
           </CardHeader>
           <CardContent />
