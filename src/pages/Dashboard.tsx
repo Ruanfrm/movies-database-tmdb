@@ -78,12 +78,7 @@ export function Dashboard() {
     return <Loader />;
   }
 
-  // Estruturando cpuData para ser usado no gráfico
-  const formattedCpuData = cpuData.map((cpu, index) => ({
-    time: `${index + 1}s`,
-    cpu
-  }));
-
+ 
   return (
     <div className="p-4  transition-colors">
       <h2 className="text-xl font-semibold mb-4">Informações do Sistema</h2>
