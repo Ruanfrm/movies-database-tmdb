@@ -1,20 +1,38 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "@/firebaseConfig";
+import { toast } from "sonner";
 
 const RegisterForm = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const navigate = useNavigate();
 
-  const handleRegister = () => {
-    // Lógica de registro
-    console.log("Registrar com nome:", name, "email:", email);
+  const handleRegister = async () => {
+    if (password !== confirmPassword) {
+      toast.error("As senhas não coincidem.");
+      return;
+    }
+  
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      localStorage.setItem("userToken", userCredential.user.uid); // Armazena o ID do usuário
+      toast.success("Conta criada com sucesso!");
+      navigate("/"); // Redireciona para a rota principal
+    } catch (error) {
+      toast.error("Erro ao criar conta.");
+      console.error("Erro de registro:", error);
+    }
   };
+  
 
   return (
-    <div className="w-full max-w-md mx-auto  p-8 shadow-md rounded-lg mt-10">
+    <div className="w-full max-w-md mx-auto p-8 shadow-md rounded-lg mt-10">
       <h2 className="text-2xl font-bold mb-6 text-center">Crie sua conta</h2>
       <p className="text-sm text-gray-600 mb-6 text-center">Preencha as informações para se registrar</p>
       <div className="flex flex-col gap-4">
